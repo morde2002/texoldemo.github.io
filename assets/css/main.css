@@ -33,6 +33,7 @@ body {
 a {
   color: var(--color-primary);
   text-decoration: none;
+  font-weight: 800;
 }
 
 a:hover {
@@ -268,6 +269,7 @@ section {
   width: 100%;
   height: 80px;
   z-index: 1000;
+  font-weight: 800;
   /* Add your sticky header styles here */
   background-color: #fff; /* Change as needed */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Example shadow */
@@ -314,8 +316,8 @@ section {
     padding: 0 3px;
     font-family: var(--font-primary);
     font-size: 14px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.6);
+    font-weight: 700;
+    color: white;
     text-transform: uppercase;
     white-space: nowrap;
     transition: 0.3s;
@@ -335,6 +337,7 @@ section {
     width: 100%;
     height: 2px;
     bottom: -6px;
+    font-weight: 800;
     left: 0;
     background-color: var(--color-primary);
     visibility: hidden;
@@ -353,13 +356,14 @@ section {
   .navbar .active,
   .navbar .active:focus,
   .navbar li:hover>a {
-    color: #fff;
+    color: red;
   }
 
   .navbar .dropdown ul {
     display: block;
     position: absolute;
     left: 28px;
+    font-weight: 800px;
     top: calc(100% + 30px);
     margin: 0;
     padding: 10px 0;
@@ -466,7 +470,7 @@ section {
     padding: 10px 20px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
-    font-weight: 750;
+    font-weight: 900;
     color: black;
     white-space: nowrap;
     text-transform: uppercase;
