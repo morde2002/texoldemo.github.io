@@ -194,6 +194,31 @@ section {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
+
+#preloader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff; /* Change as needed */
+}
+
+#video-preloader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/*--------------------------------------------------------------
+#The initial Preloader
+
+
 #preloader {
   position: fixed;
   inset: 0;
@@ -224,7 +249,8 @@ section {
   100% {
     transform: rotate(360deg);
   }
-}
+}-------------------------------------------------------------
+*/
 
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
