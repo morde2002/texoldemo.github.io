@@ -176,7 +176,8 @@ section {
 
 .scroll-top i {
   font-size: 24px;
-  color: var(--color-secondary);
+  font-weight: 700;
+  color: white;
   line-height: 0;
 }
 
