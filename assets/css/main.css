@@ -2712,3 +2712,18 @@ section {
 .footer .footer-legal .credits a {
   color: var(--color-primary);
 }
+
+
+/*--------------------------------------------------------------
+# video section
+--------------------------------------------------------------*/
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-container video {
+  max-width: 100%;
+  height: auto;
+}
