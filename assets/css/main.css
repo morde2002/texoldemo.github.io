@@ -224,6 +224,13 @@ section {
   min-height: 100%;
 }
 
+@media (max-width: 767px) {
+  #gif-preloader {
+    width: 500px;
+    height: 500px;
+  }
+}
+
 /*--------------------------------------------------------------
 #The initial Preloader
 
