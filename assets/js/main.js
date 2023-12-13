@@ -234,3 +234,45 @@ window.addEventListener('scroll', handleScroll);
 // Initial check on page load
 window.addEventListener('load', handleScroll);
 
+
+
+let currentTab = 0;
+showTab(currentTab);
+
+function showTab(n) {
+  const tabs = document.querySelectorAll('.tab');
+  tabs[n].classList.add('active');
+
+  if (n === 0) {
+    // Handle button visibility or actions for the first tab
+  } else if (n === tabs.length - 1) {
+    // Handle button visibility or actions for the last tab
+  } else {
+    // Handle button visibility or actions for intermediate tabs
+  }
+}
+
+function nextTab() {
+  const tabs = document.querySelectorAll('.tab');
+
+  if (currentTab < tabs.length - 1) {
+    tabs[currentTab].classList.remove('active');
+    currentTab++;
+    showTab(currentTab);
+  }
+}
+
+function prevTab() {
+  const tabs = document.querySelectorAll('.tab');
+
+  if (currentTab > 0) {
+    tabs[currentTab].classList.remove('active');
+    currentTab--;
+    showTab(currentTab);
+  }
+}
+
+function submitForm() {
+  // Implement form submission logic here
+  // Validate and collect form data for final submission
+}

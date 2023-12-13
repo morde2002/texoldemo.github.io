@@ -2770,3 +2770,21 @@ section {
   max-width: 100%;
   height: auto;
 }
+
+
+
+/* Tabbed Form Styles */
+.tabbed-form {
+  width: 100%;
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto;
+}
+
+.tab {
+  display: none;
+}
+
+.tab.active {
+  display: block;
+  margin-bottom: 20px;
+}
