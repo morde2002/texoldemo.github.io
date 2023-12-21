@@ -2773,52 +2773,343 @@ section {
 
 
 
-/* Tabbed Form Styles */
-.tabbed-form {
-  width: 100%;
-  max-width: 800px; /* Adjust as needed */
-  margin: 0 auto;
+
+
+/* HTML: <div class="loader"></div> */
+@keyframes fueling-up {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
-.tab {
+.loader {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  animation: fueling-up 1s infinite;
+}
+
+.loader:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+
+
+
+
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+p {
+color: grey;
+}
+
+#heading {
+text-transform: uppercase;
+color: #673AB7;
+font-weight: normal;
+}
+
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 20px;
+}
+
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+
+  /*stacking fieldsets above each other*/
+  position: relative;
+}
+
+.form-card {
+text-align: left;
+}
+
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
   display: none;
 }
 
-.tab.active {
-  display: block;
-  margin-bottom: 20px;
-}
-
-
-
-.loader {
-  font-size: 48px;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  display: inline-block;
-  color: #FF3D00;
-  letter-spacing: 2px;
-  position: relative;
+#msform input, #msform textarea {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
   box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  background-color: #ECEFF1;
+  font-size: 16px;
+  letter-spacing: 1px;
 }
-.loader::after {
-  content: 'Loading';
+#msform select, #msform option {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  background-color: #ECEFF1;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+#msform input:focus, #msform textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #673AB7;
+  outline-width: 0;
+}
+
+/*Next Buttons*/
+#msform .action-button {
+  width: 100px;
+  background: #673AB7;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 0px 10px 5px;
+  float: right;
+}
+
+#msform .action-button:hover, #msform .action-button:focus {
+  background-color: #311B92;
+}
+
+/*Previous Buttons*/
+#msform .action-button-previous {
+  width: 100px;
+  background: #616161;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 10px 5px;
+  margin: 10px 5px 10px 0px;
+  float: right;
+}
+
+#msform .action-button-previous:hover, #msform .action-button-previous:focus {
+  background-color: #000000;
+}
+
+/*The background card*/
+.card {
+  z-index: 0;
+  border: none;
+  position: relative;
+}
+
+/*FieldSet headings*/
+.fs-title {
+  font-size: 25px;
+  color: #673AB7;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left;
+}
+
+.purple-text {
+color: #673AB7;
+  font-weight: normal;
+}
+
+/*Step Count*/
+.steps {
+font-size: 25px;
+  color: gray;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: right;
+}
+
+/*Field names*/
+.fieldlabels {
+color: gray;
+text-align: left;
+}
+
+/*Icon progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey;
+}
+
+#progressbar .active {
+  color: #673AB7;
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 25%;
+  float: left;
+  position: relative;
+  font-weight: 400;
+}
+
+/*Icons in the ProgressBar*/
+#progressbar #account:before {
+  font-family: FontAwesome;
+  content: "\f2c2";
+}
+
+#progressbar #personal:before {
+  font-family: FontAwesome;
+  content: "\f007";
+}
+
+#progressbar #payment:before {
+  font-family: FontAwesome;
+  content: "\f022";
+}
+
+#progressbar #confirm:before {
+  font-family: FontAwesome;
+  content: "\f00c";
+}
+
+/*Icon ProgressBar before any progress*/
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  color: #ffffff;
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px;
+}
+
+/*ProgressBar connectors*/
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: lightgray;
   position: absolute;
   left: 0;
-  top: 0;
-  color: #FFF;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  box-sizing: border-box;
-  animation: animloader 6s linear infinite;
+  top: 25px;
+  z-index: -1;
 }
 
-@keyframes animloader {
-  0% {
-    height: 100%;
-  }
-  100% {
-    height: 0%;
-  }
+/*Color number of the step and the connector before it*/
+#progressbar li.active:before, #progressbar li.active:after {
+  background: #673AB7;
+}
+
+/*Animated Progress Bar*/
+.progress {
+height: 20px;
+}
+
+.progress-bar {
+background-color: #673AB7;
+}
+
+/*Fit image in bootstrap div*/
+.fit-image{
+  width: 100%;
+  object-fit: cover;
+}
+
+.card2-selection {
+  display: flex;
+  justify-content: center;
+}
+.card2 {
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 7px;
+  position: relative;
+  width: 300px;
+  margin-right: 30px; /* Adjust the margin-right to create space between cards */
+}
+.card2 img {
+  max-width: 100%; /* Ensure the image fits within the width of the card */
+  max-height: 100%; /* Ensure the image fits within the height of the card */
+  width: auto; /* Allow the width to adjust dynamically based on the card's width */
+  height: auto; /* Allow the height to adjust dynamically based on the card's height */
+  border-radius: 5px; /* Add border radius to the image if needed */
+}
+.card2 h3 {
+  margin-top: 10px;
+}
+.card2 .selected-icon {
+  display: none;
+  color: blue;
+  font-weight: 600;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.card2.selected {
+  border-color: red;
+  border-width: 2px;
+  transform: scale(1.1);
+}
+.card2.selected .selected-icon {
+  display: block;
+}
+.card2 img:hover {
+  transform: scale(1.1);
+}
+
+/* Styling for Summary Details */
+.summary-details {
+  margin-top: 30px;
+}
+
+.summary-details p {
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  /* Add other desired styles */
 }

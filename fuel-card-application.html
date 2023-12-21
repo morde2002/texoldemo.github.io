@@ -88,58 +88,171 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('assets/img/sta/cafe.png');">
+    <div class="breadcrumbs d-flex align-items-center" style="background-image: url('assets/img/texolcard/cardblue1.png');">
       <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
 
         <h2>Texol Fuel Card Application</h2>
 
       </div>
     </div><!-- End Breadcrumbs -->
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+          <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+              <h2 id="heading">Register for your Fuel Card</h2>
+              <p>Fill all form field to go to next step</p>
 
-    <!-- ======= Alt Services Section ======= -->
-    <section id="alt-services" class="alt-services">
-      <div class="container" data-aos="fade-up">
-        <!-- Tabbed Form Section -->
-        <div class="tabbed-form">
-          <div class="tab">
-              <!-- Card Type Tab -->
-              <h2>Card Type</h2>
-              <div class="card-type">
-                  <!-- Include your images and selection options for card type here -->
-                  <img src="assets/img/texolcard/tex-boda2.jpeg" alt="Card 1" width="300" height="300">
-                  <img src="assets/img/texolcard/texol-card2.jpeg" alt="Card 2" width="300" height="300">
-                  <br><br>
-                  <button class="btn-get-started" onclick="nextTab()">Next</button>
-              </div>
-          </div>
-
-          <div class="tab">
-              <!-- Card Application Details Tab -->
-              <h2>Card Application Details</h2>
-              <div class="application-details">
-                  <!-- Include form fields for personal details -->
-                  <!-- Input fields for personal details -->
-                  <button class="btn-get-started" onclick="prevTab()">Previous</button>
-                  <button class="btn-get-started" onclick="nextTab()">Next</button>
-              </div>
-          </div>
-
-          <div class="tab">
-              <!-- Verification Tab -->
-              <h2>Verification</h2>
-              <div class="verification">
-                  <!-- Include fields for ID verification -->
-                  <!-- Input fields for verification -->
-                  <button class="btn-get-started" onclick="prevTab()">Previous</button>
-                  <button class="btn-get-started" onclick="submitForm()">Submit</button>
-              </div>
+              <form id="msform" action="card-application.php" method="post">
+                  <!-- progressbar -->
+                  <ul id="progressbar">
+                      <li class="active" id="account"><strong>Card Selection</strong></li>
+                      <li id="personal"><strong>Personal</strong></li>
+                      <li id="payment"><strong>Summary</strong></li>
+                      <li id="confirm"><strong>Finish</strong></li>
+                  </ul>
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                  <br>
+                  <!-- fieldsets -->
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h2 class="fs-title">Choose a card type:</h2>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 1 - 4</h2>
+                        </div>
+                      </div>
+                      <div class="card2-selection">
+                        <div class="card2" onclick="selectCard('boda')">
+                          <img src="assets/img/texolcard/tex-boda2.jpeg" alt="Boda Card">
+                          <h3>Boda Card</h3>
+                          <svg class="selected-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+                        </div>
+                        <div class="card2" onclick="selectCard('individual')">
+                          <img src="assets/img/texolcard/tex-boda3.jpeg" alt="Individual Card">
+                          <h3>Individual</h3>
+                          <svg class="selected-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+                        </div>
+                        <div class="card2" onclick="selectCard('corporate')">
+                          <img src="assets/img/texolcard/texol-card2.jpeg" alt="Corporate Card">
+                          <h3>Corporate</h3>
+                          <svg class="selected-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+                  </fieldset>
+                  <fieldset>
+                    <div class="form-card">
+                        <div class="row">
+                            <div class="col-7">
+                                <h2 class="fs-title">Personal Information:</h2>
+                            </div>
+                            <div class="col-5">
+                                <h2 class="steps">Step 2 - 4</h2>
+                            </div>
+                        </div>
+                        <label class="fieldlabels">CardHolder Name: *</label>
+                        <input type="text" name="name" placeholder="CardHolder Name" required/>
+                
+                        <label class="fieldlabels">Email: *</label>
+                        <input type="text" name="email" placeholder="e.g. name@gmail.com" required/>
+                
+                        <label class="fieldlabels">Contact No: *</label>
+                        <input type="text" name="phno" placeholder="Contact No." required/>
+                
+                        <label class="fieldlabels">ID Type:</label>
+                        <select class="fieldlabels" id="id-type" name="id-type">
+                            <option value="#">select</option>
+                            <option value="passport">Passport</option>
+                            <option value="national-id">National ID</option>
+                            <!-- Add other ID types as options -->
+                        </select>
+                        <label class="fieldlabels">ID/Passport No:</label>
+                        <input type="text" name="id-passport-no" placeholder="ID/Passport No." required/>
+                
+                        <label class="fieldlabels">Choose your product:</label>
+                        <select class="fieldlabels" id="product" name="product">
+                            <option value="#">select</option>
+                            <option value="diesel">Diesel</option>
+                            <option value="petrol">Petrol</option>
+                            <option value="stabex-gas">Stabex Gas</option>
+                            <!-- Add other product options -->
+                        </select>
+                
+                        <label class="fieldlabels">Pick up Location:</label>
+                        <select class="fieldlabels" id="pickup-location" name="pickup-location">
+                            <option value="#">select</option>
+                            <option value="location1">Location 1</option>
+                            <option value="location2">Location 2</option>
+                            <option value="location3">Location 3</option>
+                            <!-- Add other location options -->
+                        </select>
+                    </div>
+                    <input type="button" name="next" class="next action-button" value="Next"/>
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                  </fieldset>
+                
+                  <fieldset>
+                    <div class="form-card">
+                      <div class="row">
+                        <div class="col-7">
+                          <h2 class="fs-title">Your Summary</h2>
+                        </div>
+                        <div class="col-5">
+                          <h2 class="steps">Step 3 - 4</h2>
+                        </div>
+                      </div>
+                      <div class="summary-details">
+                        <p id="summary-cardholder-name"></p>
+                        <p id="summary-email"></p>
+                        <p id="summary-phno"></p>
+                        <p id="summary-id-type"></p>
+                        <p id="summary-id-passport-no"></p>
+                        <p id="summary-product"></p>
+                        <p id="summary-pickup-location"></p>
+                        <!-- Add other summary elements similarly for the remaining details -->
+                      </div>
+                    </div>
+                    <input type="submit" name="next" class="next action-button" value="Submit"/>
+                    <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                  </fieldset>
+                  
+                  <fieldset>
+                      <div class="form-card">
+                        <div class="row">
+                          <div class="col-7">
+                              <h2 class="fs-title">Finish:</h2>
+                            </div>
+                            <div class="col-5">
+                              <h2 class="steps">Step 4 - 4</h2>
+                            </div>
+                          </div>
+                          <br><br>
+                          <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2>
+                          <br>
+                          <div class="row justify-content-center">
+                              <div class="col-3">
+                                  <img src="https://i.imgur.com/GwStPmg.png" class="fit-image">
+                              </div>
+                          </div>
+                          <br><br>
+                          <div class="row justify-content-center">
+                              <div class="col-7 text-center">
+                                  <h5 class="purple-text text-center">You Have Successfully Registered for the Texol Card<br>You will be contacted when your card is eligble and ready for pickup</h5>
+                              </div>
+                          </div>
+                      </div>
+                      <input type="button" href="fuel-card-application.html" class="previous action-button-previous" value="Done"/>
+                  </fieldset>
+              </form>
           </div>
         </div>
-        <!-- End Tabbed Form Section -->
       </div>
-    </section>
-      
-    <!-- End Alt Services Section -->
+    </div>
 
   </main><!-- End #main -->
 
@@ -228,6 +341,7 @@
   </div>
 
   <!-- Vendor JS Files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>

@@ -236,43 +236,219 @@ window.addEventListener('load', handleScroll);
 
 
 
-let currentTab = 0;
-showTab(currentTab);
 
-function showTab(n) {
-  const tabs = document.querySelectorAll('.tab');
-  tabs[n].classList.add('active');
 
-  if (n === 0) {
-    // Handle button visibility or actions for the first tab
-  } else if (n === tabs.length - 1) {
-    // Handle button visibility or actions for the last tab
-  } else {
-    // Handle button visibility or actions for intermediate tabs
+$(document).ready(function () {
+  var current_fs, next_fs, previous_fs; // fieldsets
+  var opacity;
+  var current = 1;
+  var steps = $("fieldset").length;
+  var selectedCard = null; // Variable to track selected card
+  
+  setProgressBar(current);
+
+  // Function to handle card selection
+  function selectCard(card) {
+    if (selectedCard) {
+      selectedCard.removeClass('selected');
+    }
+    selectedCard = $(`.card2[onclick="selectCard('${card}')"]`);
+    selectedCard.addClass('selected');
   }
-}
 
-function nextTab() {
-  const tabs = document.querySelectorAll('.tab');
+  // Event handler for card selection
+  $('.card2').click(function() {
+    var cardType = $(this).attr('onclick').match(/'([^']+)'/)[1];
+    selectCard(cardType);
+  });
 
-  if (currentTab < tabs.length - 1) {
-    tabs[currentTab].classList.remove('active');
-    currentTab++;
-    showTab(currentTab);
+  $(".next").click(function(){
+    if (current === 1) {
+      // If on the first step (card selection), only proceed if a card is selected
+      if (!selectedCard) {
+        alert('Please select a card type to continue.');
+        return;
+      }
+    } else {
+      // For other steps, proceed with field validations
+      current_fs = $(this).parent();
+      var isValid = validateFields(current_fs);
+      if (!isValid) {
+        return;
+      }
+    }
+    
+    // Move to the next fieldset if all validations pass
+    current_fs = $(this).parent();
+    next_fs = $(this).parent().next();
+    
+    // Add Class Active
+    $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+    
+    // Show the next fieldset
+    next_fs.show(); 
+    
+    // Hide the current fieldset with style
+    current_fs.animate({opacity: 0}, {
+      step: function(now) {
+        // For making fieldset appear animation
+        opacity = 1 - now;
+  
+        current_fs.css({
+          'display': 'none',
+          'position': 'relative'
+        });
+        next_fs.css({'opacity': opacity});
+      }, 
+      duration: 500
+    });
+    setProgressBar(++current);
+  });
+
+  $(".previous").click(function(){
+    current_fs = $(this).parent();
+    previous_fs = $(this).parent().prev();
+    
+    $("#progressbar li").eq(current).removeClass("active");
+    previous_fs.show();
+    current_fs.animate({opacity: 0}, {
+      step: function(now) {
+        opacity = 1 - now;
+        current_fs.css({
+          'display': 'none',
+          'position': 'relative'
+        });
+        previous_fs.css({'opacity': opacity});
+      }, 
+      duration: 500
+    });
+    setProgressBar(--current);
+  });
+
+  function setProgressBar(curStep){
+    var percent = parseFloat(100 / steps) * curStep;
+    percent = percent.toFixed();
+    $(".progress-bar").css("width",percent+"%");
   }
-}
 
-function prevTab() {
-  const tabs = document.querySelectorAll('.tab');
+  function validateFields(current_fs) {
+    // Perform field validations based on the current fieldset
+    if (current === 2) {
+      var cardholderName = current_fs.find('input[name="name"]').val();
+      if (!cardholderName.match(/^[A-Za-z]+$/)) {
+        showError(current_fs.find('input[name="name"]'), 'Cardholder Name should contain only text.');
+        return false;
+      } else {
+        hideError(current_fs.find('input[name="name"]'));
+      }
 
-  if (currentTab > 0) {
-    tabs[currentTab].classList.remove('active');
-    currentTab--;
-    showTab(currentTab);
+      var email = current_fs.find('input[name="email"]').val();
+      if (!validateEmail(email)) {
+        showError(current_fs.find('input[name="email"]'), 'Please enter a valid email address.');
+        return false;
+      } else {
+        hideError(current_fs.find('input[name="email"]'));
+      }
+
+      var phno = current_fs.find('input[name="phno"]').val();
+      if (!phno.match(/^\d{10}$/)) {
+        showError(current_fs.find('input[name="phno"]'), 'Contact Number should be a 10-digit number.');
+        return false;
+      } else {
+        hideError(current_fs.find('input[name="phno"]'));
+      }
+
+      var idType = current_fs.find('select[name="id-type"]').val();
+      if (idType === '#') {
+        showError(current_fs.find('select[name="id-type"]'), 'Please select an ID Type.');
+        return false;
+      } else {
+        hideError(current_fs.find('select[name="id-type"]'));
+      }
+
+      var idPassportNo = current_fs.find('input[name="id-passport-no"]').val();
+      var maxIdLength = idType === 'national-id' ? 8 : 12;
+      if (!idPassportNo.match(/^\d+$/) || idPassportNo.length !== maxIdLength) {
+        showError(current_fs.find('input[name="id-passport-no"]'), 'ID/Passport Number should contain only numerical characters and should be ' + maxIdLength + ' digits for ' + idType.toUpperCase() + '.');
+        return false;
+      } else {
+        hideError(current_fs.find('input[name="id-passport-no"]'));
+      }
+
+      var product = current_fs.find('select[name="product"]').val();
+      if (product === '#') {
+        showError(current_fs.find('select[name="product"]'), 'Please select a product.');
+        return false;
+      } else {
+        hideError(current_fs.find('select[name="product"]'));
+      }
+
+      var pickupLocation = current_fs.find('select[name="pickup-location"]').val();
+      if (pickupLocation === '#') {
+        showError(current_fs.find('select[name="pickup-location"]'), 'Please select a pick-up location.');
+        return false;
+      } else {
+        hideError(current_fs.find('select[name="pickup-location"]'));
+      }
+        
+      // Additional validations for the second fieldset
+      // ...
+    } else if (current === 3) {
+      // For the third step (summary step)
+      function displaySummary() {
+        var cardholderName = current_fs.find('input[name="name"]').val();
+        var email = current_fs.find('input[name="email"]').val();
+        var phno = current_fs.find('input[name="phno"]').val();
+        var idType = current_fs.find('select[name="id-type"]').val();
+        var idPassportNo = current_fs.find('input[name="id-passport-no"]').val();
+        var product = current_fs.find('select[name="product"]').val();
+        var pickupLocation = current_fs.find('select[name="pickup-location"]').val();
+
+        // Console logs to check the fetched values
+        console.log('Cardholder Name:', cardholderName);
+        console.log('Email:', email);
+        console.log('Contact Number:', phno);
+        console.log('ID Type:', idType);
+        console.log('ID/Passport Number:', idPassportNo);
+        console.log('Product:', product);
+        console.log('Pickup Location:', pickupLocation);
+
+        // Display summary in the third fieldset
+        $("#summary-cardholder-name").text("Cardholder Name: " + cardholderName);
+        $("#summary-email").text("Email: " + email);
+        $("#summary-phno").text("Contact Number: " + phno);
+        $("#summary-id-type").text("ID Type: " + idType);
+        $("#summary-id-passport-no").text("ID/Passport Number: " + idPassportNo);
+        $("#summary-product").text("Product: " + product);
+        $("#summary-pickup-location").text("Pickup Location: " + pickupLocation);
+        // Add other summary elements similarly for the remaining details
+      }
+      
+      // Call the function to display the summary details
+      displaySummary();
+
+    } // Add additional validations for other steps if needed
+
+    return true;
   }
-}
 
-function submitForm() {
-  // Implement form submission logic here
-  // Validate and collect form data for final submission
-}
+  function validateEmail(email) {
+    // Basic email validation regex
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  function showError(element, message) {
+    // Show error message below the input field
+    element.addClass('error');
+    element.parent().append('<span class="error-message" style="color: red;">' + message + '</span>');
+  }
+
+  function hideError(element) {
+    // Remove error message and error class
+    element.removeClass('error');
+    element.parent().find('.error-message').remove();
+  }
+});
+
+
